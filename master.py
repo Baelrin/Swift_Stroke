@@ -26,7 +26,7 @@ def start_screen(stdscr):
     :param stdscr: Curses window used to handle the screen.
     """
     stdscr.clear()
-    stdscr.addstr("Welcome to the Speed Typing Test!\nPress any key to begin!")
+    stdscr.addstr("Welcome to the Swift_Stroke!\nPress any key to begin!")
     stdscr.refresh()
     stdscr.getkey()
 
