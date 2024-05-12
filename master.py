@@ -43,7 +43,9 @@ def wpm_test(stdscr, texts):
 
     while True:
         time_elapsed = max(time.time() - start_time, 1)
-        wpm = round((len(current_text) / (time_elapsed / 60)) / 5)
+        wpm = (
+            round((len(current_text) / (time_elapsed / 60)) / 5) if current_text else 0
+        )
 
         stdscr.clear()
         display_text(stdscr, target_text, current_text, wpm)
@@ -55,7 +57,7 @@ def wpm_test(stdscr, texts):
 
         try:
             key = stdscr.getkey()
-        except Exception:
+        except curses.error:
             continue
 
         if ord(key) == 27:
@@ -77,7 +79,8 @@ def main(stdscr):
     start_screen(stdscr)
     while True:
         wpm_test(stdscr, texts)
-        stdscr.addstr(2, 0, "You completed the text Press any key to continue...")
+        stdscr.addstr(2, 0, "You completed the text. Press any key to continue...")
+        stdscr.refresh()
         key = stdscr.getkey()
 
         if ord(key) == 27:
