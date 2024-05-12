@@ -1,23 +1,30 @@
 import curses
-from curses import wrapper
-import time
 import random
+import time
 from collections import deque
+from curses import wrapper
 
-# Константы
-FILE_NAME = "text.txt"
-COLOR_GREEN = curses.COLOR_GREEN
-COLOR_RED = curses.COLOR_RED
-COLOR_WHITE = curses.COLOR_WHITE
-COLOR_BLACK = curses.COLOR_BLACK
+FILE_NAME = "text.txt"  # Constant for the file name containing text
+COLOR_GREEN = curses.COLOR_GREEN  # Color constant for green
+COLOR_RED = curses.COLOR_RED  # Color constant for red
+COLOR_WHITE = curses.COLOR_WHITE  # Color constant for white
+COLOR_BLACK = curses.COLOR_BLACK  # Color constant for black
 
 
 def load_texts():
+    """
+    Load and strip lines of text from a predefined text file.
+    :return: list of stripped lines of text.
+    """
     with open(FILE_NAME, "r") as f:
         return [line.strip() for line in f]
 
 
 def start_screen(stdscr):
+    """
+    Display the welcome screen with instructions.
+    :param stdscr: Curses window used to handle the screen.
+    """
     stdscr.clear()
     stdscr.addstr("Welcome to the Speed Typing Test!\nPress any key to begin!")
     stdscr.refresh()
@@ -25,6 +32,13 @@ def start_screen(stdscr):
 
 
 def display_text(stdscr, target, current, wpm=0):
+    """
+    Display the target text, current input by the user and the real-time WPM.
+    :param stdscr: Curses window used to handle the screen.
+    :param target: The target text for typing.
+    :param current: The current text typed by the user.
+    :param wpm: Words per minute speed.
+    """
     stdscr.addstr(target)
     stdscr.addstr(1, 0, f"WPM: {wpm}")
 
@@ -35,6 +49,11 @@ def display_text(stdscr, target, current, wpm=0):
 
 
 def wpm_test(stdscr, texts):
+    """
+    Handle the typing test logic including displaying the text and processing input.
+    :param stdscr: Curses window used to handle the screen.
+    :param texts: List of texts to choose from for the typing test.
+    """
     target_text = random.choice(texts)
     current_text = deque()
     wpm = 0
@@ -71,6 +90,10 @@ def wpm_test(stdscr, texts):
 
 
 def main(stdscr):
+    """
+    Main function to initialize color pairs and start the typing test.
+    :param stdscr: Curses window used to handle the screen.
+    """
     curses.init_pair(1, COLOR_GREEN, COLOR_BLACK)
     curses.init_pair(2, COLOR_RED, COLOR_BLACK)
     curses.init_pair(3, COLOR_WHITE, COLOR_BLACK)
